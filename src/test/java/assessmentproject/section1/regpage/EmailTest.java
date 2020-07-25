@@ -88,6 +88,7 @@ public class EmailTest {
         Email email = new Email();
 
         // checking how many '@' are there
+
         name = "sa@mson";
         Actual = email.validation(name.concat(gmail));
         Expected = "email cannot contain two or more of '@' in your username";
