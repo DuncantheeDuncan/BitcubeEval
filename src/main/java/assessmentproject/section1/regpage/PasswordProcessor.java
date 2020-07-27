@@ -10,9 +10,9 @@ public class PasswordProcessor extends Password{
 
             String salt = Password.getSalt(20);
             String SecurePassword = Password.generateSecurePassword(password, salt);
-            System.out.println();
-            System.out.println("My secure password = " + SecurePassword);
-            System.out.println("Salt value = " + salt);
+//            System.out.println();
+//            System.out.println("My secure password = " + SecurePassword);
+//            System.out.println("Salt value = " + salt);
             return SecurePassword;
         }
         throw new AssertionError("Error double check your password please");

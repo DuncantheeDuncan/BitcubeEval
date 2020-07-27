@@ -81,13 +81,4 @@ public class PasswordTests {
         assertTrue(Boolean.parseBoolean(Actual));
     }
 
-    @DisplayName("DELETE LATER")
-    @Test
-    public void jj(){
-
-        Password pas = new Password();
-
-        password ="JacksonMabso%45";
-        System.out.println(new PasswordProcessor().password(password));
-    }
 }

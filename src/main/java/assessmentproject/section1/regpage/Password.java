@@ -85,12 +85,4 @@ public class Password {
         return String.valueOf(salt);
     }
 
-
-    public static boolean verifyUserPassword(String providedPassword, String securedPassword, String salt) {
-
-        String newSecurePassword = generateSecurePassword(providedPassword, salt);
-
-        return newSecurePassword.equalsIgnoreCase(securedPassword);
-    }
-
 }
