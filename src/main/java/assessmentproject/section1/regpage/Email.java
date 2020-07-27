@@ -27,8 +27,10 @@ public class Email {
         // are both unique they will be both added.
 
         if (!emailHashSet.contains(makeUnique.toLowerCase())) {
-            if (!makeUnique.contains("email"))
+            if (!makeUnique.contains("email")) {
                 emailHashSet.add(makeUnique.toLowerCase());
+                return makeUnique.toLowerCase();
+            }
         } else {
             return "email already exists " + makeUnique;
         }
