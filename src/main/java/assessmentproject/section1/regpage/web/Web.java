@@ -1,5 +1,7 @@
 package assessmentproject.section1.regpage.web;
 
+import assessmentproject.section1.regpage.EmailProcessor;
+import assessmentproject.section1.regpage.PasswordProcessor;
 import assessmentproject.section1.regpage.PersonalInformation;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -13,58 +15,115 @@ public class Web extends WebProcessor {
 
     public static void main(String[] args) {
 
-        WebProcessor wbp = new WebProcessor();
+
         PersonalInformation ps = new PersonalInformation();
+        EmailProcessor em = new EmailProcessor();
+        PasswordProcessor pass = new PasswordProcessor();
+        WebProcessor wpr = new WebProcessor();
 
         staticFiles.location("/public");
         port(8080);
 
-        Map<String, Object> model = new HashMap<>();//FIXME results might differ since the map is outside
+        Map<String, Object> model = new HashMap<>();
+        WebProcessor er = new WebProcessor();
 
 
-        get("/", (req, res) -> {
+        er.emailError.clear();
 
-            int count = 0;
+
+        get("/", (req, res) -> new HandlebarsTemplateEngine()
+                .render(new ModelAndView(model, "index.handlebars")));
+
+
+        get("/registration", (req, res) -> {
+
+            model.remove("emailError", er.emailError);
+            return new HandlebarsTemplateEngine()
+                    .render(new ModelAndView(model, "registration.handlebars"));
+        });
+
+
+        post("/registration", (req, res) -> {
+
+            notFound("<html><body><h1>Page not found</h1></body></html>");
+
+
             String firstName = req.queryParams("firstName");
             String secondName = req.queryParams("secondName");
             String surName = req.queryParams("surName");
+            String emailInput = req.queryParams("email");
+            String passwordInput = req.queryParams("password");
+            model.remove("emailError", er.emailError);
 
-            if (!firstName.isEmpty() && !secondName.isEmpty() && !surName.isEmpty()) {
-                count++;
-                String names = ps.names(firstName, secondName, surName);
+            String names = ps.names(firstName, secondName, surName);
+            String email = em.addEmail(emailInput);
+            String password = pass.password(passwordInput);
+            er.emailError.clear();
 
-                if (names.equals("Error"))
-                    wbp.error.put("error "+count, "names cannot contain special characters and be less tha 3 letters");
+            if (wpr.emailChecker.contains(email)) {
 
-                String[] splitNames = names.split(" ");
 
-                wbp.firstName.put("id " + count, splitNames[0]);
-                wbp.secondName.put("id " + count, splitNames[1]);
-                wbp.surName.put("id " + count, splitNames[2]);
+                er.emailError.add("email must be unique, this one is already taken");
+                model.put("emailError", er.emailError);
+            } else {
 
-            } else if (secondName.isEmpty()) {
-                count++;
-                String names = ps.names(firstName, surName);
-                String[] splitNames = names.split(" ");
+                wpr.emailsList.add(email);
+                model.put("email", wpr.emailsList);
+                wpr.emailChecker.add(email);
 
-                if (names.equals("Error"))
-                    wbp.error.put("error "+count, "names cannot contain special characters and be less tha 3 letters");
+                if (!password.isEmpty()) {
+                    wpr.passwordsList.add(password);
+                    model.put("password", wpr.passwordsList);
+                }
 
-                wbp.firstName.put("id " + count, splitNames[0]);
-                wbp.surName.put("id " + count, splitNames[1]);
+                if (!firstName.isEmpty() & !secondName.isEmpty() & !surName.isEmpty()) {
+
+                    String[] splitNames = names.split(" ");
+
+                    wpr.firstNamesList.add(splitNames[0]);
+                    wpr.secondNamesList.add(splitNames[1]);
+                    wpr.surNamesList.add(splitNames[2]);
+
+                    wpr.counter.add(splitNames[0]);
+                    model.put("counter", wpr.counter.size());
+
+                    model.put("firstName", wpr.firstNamesList);
+                    model.put("secondName", wpr.secondNamesList);
+                    model.put("surName", wpr.surNamesList);
+
+                } else if (secondName.isEmpty()) {
+
+                    names = ps.names(firstName, surName);
+
+                    String[] splitNames = names.split(" ");
+
+                    wpr.firstNamesList.add(splitNames[0]);
+                    wpr.secondNamesList.add("N/A");
+                    wpr.surNamesList.add(splitNames[1]);
+
+
+                    model.put("firstName", wpr.firstNamesList);
+                    model.put("secondName", wpr.secondNamesList);
+                    model.put("surName", wpr.surNamesList);
+
+                    wpr.counter.add(splitNames[0]);
+                    model.put("counter", wpr.counter.size());
+
+                } else if ("Error".equals(names)) {
+
+                    model.put("error", er.emailError.add("something is wrong the names you provided"));
+                }
             }
 
-//            rendering
-            model.put("firstName", wbp.getFirstName());
-            model.put("secondName", wbp.getSecondName());
-            model.put("surName", wbp.getSurName());
-
-
-            model.put("hello", "HELLO WORLD");
-
-
             return new HandlebarsTemplateEngine()
-                    .render(new ModelAndView(model, "index.handlebars"));
+                    .render(new ModelAndView(model, "registration.handlebars"));
         });
+
+
+        get("/registered", (req, res) -> new HandlebarsTemplateEngine()
+                .render(new ModelAndView(model, "registered.handlebars")));
+
+        post("/registered", (req, res) -> new HandlebarsTemplateEngine()
+                .render(new ModelAndView(model, "registered.handlebars")));
     }
 }

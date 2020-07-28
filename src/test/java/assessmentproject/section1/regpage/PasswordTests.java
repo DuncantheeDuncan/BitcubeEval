@@ -15,7 +15,6 @@ public class PasswordTests {
     @DisplayName("should check if all password minimum requirements are met")
     @Test
     public void verifyingPassMinimum() {
-        Password pas = new Password();
 
         // TODO  ~ TRUE MEANS THERE IS AN ERROR
         //       ~ FALSE MEANS THERE ARE NO ERRORS

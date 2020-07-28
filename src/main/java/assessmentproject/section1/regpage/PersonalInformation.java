@@ -1,7 +1,5 @@
 package assessmentproject.section1.regpage;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PersonalInformation {
 
@@ -15,39 +13,10 @@ public class PersonalInformation {
         return capitalise.trim();
     }
 
-    public boolean makingSureThereAreNoUnWantedCharacters(String minimum) {
-
-        boolean error = true;
-        boolean isNoSpecialCharacter = true;
-        boolean minLengthIsSix = false;
-
-        Pattern pattern = Pattern.compile("[a-zA-Z0-9]+");
-
-        char[] check = minimum.toCharArray();
-
-        if (check.length >= 3)
-            minLengthIsSix = true;
-
-        for (char C : check) {
-            Matcher matcher = pattern.matcher(String.valueOf(C));
-
-            if (!matcher.matches()) {
-                isNoSpecialCharacter = false;
-            }
-
-            if (isNoSpecialCharacter  && minLengthIsSix)
-                error = false;
-        }
-        return error;
-    }
-
 
     public String names(String firstName, String surname) {
 
-        boolean isTrueFirstName = makingSureThereAreNoUnWantedCharacters(firstName);
-        boolean isTrueSurname = makingSureThereAreNoUnWantedCharacters(surname);
-
-        if (!isTrueFirstName && !isTrueSurname) {
+        if (!firstName.isEmpty() & !surname.isEmpty()) {
             String _1stName = capitaliseFirstLetter(firstName);
             String familyName = capitaliseFirstLetter(surname);
 
@@ -55,22 +24,18 @@ public class PersonalInformation {
         } else {
             return "Error";
         }
-
     }
+
 
     public String names(String firstName, String secondName, String surname) {
 
-        boolean isTrueFirstName = makingSureThereAreNoUnWantedCharacters(firstName);
-        boolean isTrueSurname = makingSureThereAreNoUnWantedCharacters(surname);
-        boolean isTrueSecondName = makingSureThereAreNoUnWantedCharacters(secondName);
-
-        if (!isTrueFirstName && !isTrueSurname && !isTrueSecondName) {
+        if (!firstName.isEmpty() & !surname.isEmpty() & !secondName.isEmpty()) {
 
             String _1stName = capitaliseFirstLetter(firstName);
             String familyName = capitaliseFirstLetter(surname);
             String _2ndName = capitaliseFirstLetter(secondName);
 
-            return _1stName.concat(" ").concat(_2ndName + " ").concat(familyName);
+            return _1stName.concat(" ").concat(_2ndName).concat(" ").concat(familyName);
         } else {
             return "Error";
         }

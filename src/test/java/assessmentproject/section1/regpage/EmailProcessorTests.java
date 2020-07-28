@@ -12,7 +12,6 @@ public class EmailProcessorTests {
     String Actual;
     String name;
     String gmail = "@gmail.com";
-    String yahoo = "@yahoo.com";
     String mac = "@mac.com";
 
     @DisplayName("adding emails")
@@ -20,7 +19,7 @@ public class EmailProcessorTests {
     public void addingEmails() {
 
         EmailProcessor email = new EmailProcessor();
-        Email em = new Email();
+
 
         // should throw an Error
 
@@ -30,6 +29,7 @@ public class EmailProcessorTests {
 
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));
+
 
         // check if email exists
 
@@ -57,13 +57,16 @@ public class EmailProcessorTests {
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));
 
+
         // checking how many '@' are there
+
         name = "sa@mson";
         Actual = email.addEmail(name.concat(gmail));
         Expected = "email cannot contain two or more of '@' in your username";
 
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));
+
 
         // minimum characters is 3 otherwise it must fail
 
@@ -74,12 +77,14 @@ public class EmailProcessorTests {
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));
 
+
         name = "sa@look.com";
         Actual = email.addEmail(name);
         Expected = "email is too short";
 
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));
+
 
         // must have '@'
 

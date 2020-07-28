@@ -1,1 +1,112 @@
-registration
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Include Handlebars from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+    <title>Registration</title>
+
+</head>
+<body>
+<div class="container">
+    <br><br>
+    <h2>BitCube Eval App</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="container">
+                <br>
+                <div class="list-group">
+                    <a href="/" class="
+                    list-group-item list-group-item-action">Menu</a>
+                    <a href="/registration" class="list-group-item
+                    active
+                    list-group-item-action ">Sign up</a>
+                    <a href="/registered" class="list-group-item list-group-item-action">Registered users</a>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="container">
+                <br>
+                <h2 class="header">Sign up to Bit-cube</h2>
+                <h4 class="header">
+                    {{#if emailError}}
+                        <div class="alert alert-danger" role="alert">
+                            {{this.emailError}}
+                        </div>
+                    {{/if}}
+                </h4>
+                <form action="/registration" method="post">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">First Name</span>
+                        </div>
+                        <input type="text" name="firstName" required class="form-control" placeholder="Your Name"
+                               aria-label="" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Second Name</span>
+                        </div>
+                        <input type="text" name="secondName" class="form-control" placeholder="Optional" aria-label=""
+                               aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Last Name</span>
+                        </div>
+                        <input type="text" name="surName" required class="form-control" placeholder="Your Last Name"
+                               aria-label="" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Email</span>
+                        </div>
+                        <input type="email" name="email" placeholder="Enter your email" class="form-control" required
+                               aria-label="">
+                        <div class="input-group-append">
+                            <span class="input-group-text">@example.com</span>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Password</span>
+                        </div>
+                        <input type="password" required name="password"
+                               pattern="(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{6,15}"
+                               title="Must contain at least 1 number, 1 uppercase, 1 lowercase letter, 1 special character, and must have at least  be 6 or more characters long"
+                               class="form-control" placeholder="Enter your password" aria-label=""
+                               aria-describedby="basic-addon1">
+                    </div>
+                    <button  type="submit" class="btn btn-primary">sign-up</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+<script>
+        $("#user_input").keyup(function (e) {
+            var regex = /^[a-zA-Z]+$/;
+            (regex.test(this.value) !== true) ? this.value = this.value.replace(/[^a-zA-Z]+/, '') : this.value
+        });
+
+
+</script>
+</body>
+</html>

@@ -32,11 +32,15 @@ public class Email {
                 return makeUnique.toLowerCase();
             }
         } else {
-            return "email already exists " + makeUnique;
+            try {
+               throw  new Exception("email already exists " + makeUnique);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+//            return "email already exists " + makeUnique;
         }
         return makeUnique;
     }
-
     public int count() {
         return emailHashSet.size();
     }

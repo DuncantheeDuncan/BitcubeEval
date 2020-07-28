@@ -1,6 +1,6 @@
 package assessmentproject.section1.regpage;
 
-public class EmailProcessor extends Email{
+public class EmailProcessor extends Email {
 
     public String addEmail(String email) {
         if ("".equals(email) || email == null) {
