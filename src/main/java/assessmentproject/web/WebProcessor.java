@@ -1,8 +1,9 @@
-package assessmentproject.section1.regpage.web;
+package assessmentproject.web;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
+import assessmentproject.User;
+import assessmentproject.section2.loginpage.LogIn;
+
+import java.util.*;
 
 public class WebProcessor {
 
@@ -12,7 +13,9 @@ public class WebProcessor {
     List<String> surNamesList = new ArrayList<>();
     List<String> emailsList = new ArrayList<>();
     List<String> passwordsList = new ArrayList<>();
+    List<String> passwordsListSalted = new ArrayList<>();
     List<String> counter = new ArrayList<>();
     HashSet<String> emailChecker = new HashSet<>();
-    List<String> emailError = new ArrayList<>();
+   public static Map<String, User> myUserTable = new Hashtable<>();
+   public static Map<String, LogIn> myPasswords = new Hashtable<>();
 }

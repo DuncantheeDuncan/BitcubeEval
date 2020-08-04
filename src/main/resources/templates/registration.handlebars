@@ -35,18 +35,19 @@
                 <br>
                 <h2 class="header">Sign up to Bit-cube</h2>
                 <h4 class="header">
-                    {{#if emailError}}
+<!--                    {{#if emailError}}-->
                         <div class="alert alert-danger" role="alert">
-                            {{this.emailError}}
+<!--                            {{this.emailError}}-->
+                            {{emailError}}
                         </div>
-                    {{/if}}
+<!--                    {{/if}}-->
                 </h4>
                 <form action="/registration" method="post">
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">First Name</span>
                         </div>
-                        <input type="text" name="firstName" required class="form-control" placeholder="Your Name"
+                        <input type="text" name="firstName" autocomplete="name" required class="form-control" placeholder="Your Name"
                                aria-label="" aria-describedby="basic-addon1">
                     </div>
                     <div class="input-group mb-3">
@@ -67,7 +68,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Email</span>
                         </div>
-                        <input type="email" name="email" placeholder="Enter your email" class="form-control" required
+                        <input type="email" name="email"  autocomplete="username email" placeholder="Enter your email" class="form-control" required
                                aria-label="">
                         <div class="input-group-append">
                             <span class="input-group-text">@example.com</span>
@@ -77,7 +78,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Password</span>
                         </div>
-                        <input type="password" required name="password"
+                        <input type="password" required name="new-password" autocomplete="new-password"
                                pattern="(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{6,15}"
                                title="Must contain at least 1 number, 1 uppercase, 1 lowercase letter, 1 special character, and must have at least  be 6 or more characters long"
                                class="form-control" placeholder="Enter your password" aria-label=""

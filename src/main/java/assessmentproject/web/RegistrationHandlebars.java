@@ -1,43 +1,34 @@
-package assessmentproject.section1.regpage.web;
+package assessmentproject.web;
 
+import assessmentproject.User;
 import assessmentproject.section1.regpage.EmailProcessor;
 import assessmentproject.section1.regpage.PasswordProcessor;
 import assessmentproject.section1.regpage.PersonalInformation;
+import assessmentproject.section2.loginpage.LogIn;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
 import java.util.Map;
 
+import static assessmentproject.web.WebProcessor.myPasswords;
+import static assessmentproject.web.WebProcessor.myUserTable;
 import static spark.Spark.*;
 
-public class Web extends WebProcessor {
-
-    public static void main(String[] args) {
+public class RegistrationHandlebars {
 
 
-        PersonalInformation ps = new PersonalInformation();
+    public static void registrationPage(Map model) {
+
         EmailProcessor em = new EmailProcessor();
         PasswordProcessor pass = new PasswordProcessor();
         WebProcessor wpr = new WebProcessor();
-
-        staticFiles.location("/public");
-        port(8080);
-
-        Map<String, Object> model = new HashMap<>();
-        WebProcessor er = new WebProcessor();
-
-
-        er.emailError.clear();
-
-
-        get("/", (req, res) -> new HandlebarsTemplateEngine()
-                .render(new ModelAndView(model, "index.handlebars")));
+        PersonalInformation ps = new PersonalInformation();
 
 
         get("/registration", (req, res) -> {
 
-            model.remove("emailError", er.emailError);
+
+            model.remove("emailError");
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "registration.handlebars"));
         });
@@ -47,24 +38,22 @@ public class Web extends WebProcessor {
 
             notFound("<html><body><h1>Page not found</h1></body></html>");
 
-
             String firstName = req.queryParams("firstName");
             String secondName = req.queryParams("secondName");
             String surName = req.queryParams("surName");
             String emailInput = req.queryParams("email");
-            String passwordInput = req.queryParams("password");
-            model.remove("emailError", er.emailError);
+            String passwordInput = req.queryParams("new-password");
+            model.remove("emailError");
+
 
             String names = ps.names(firstName, secondName, surName);
             String email = em.addEmail(emailInput);
             String password = pass.password(passwordInput);
-            er.emailError.clear();
+
 
             if (wpr.emailChecker.contains(email)) {
 
-
-                er.emailError.add("email must be unique, this one is already taken");
-                model.put("emailError", er.emailError);
+                model.put("emailError", "email must be unique, this one is already taken");
             } else {
 
                 wpr.emailsList.add(email);
@@ -73,7 +62,9 @@ public class Web extends WebProcessor {
 
                 if (!password.isEmpty()) {
                     wpr.passwordsList.add(password);
+                    wpr.passwordsListSalted.add(pass.salt);
                     model.put("password", wpr.passwordsList);
+                    model.put("saltedPassword",wpr.passwordsListSalted);
                 }
 
                 if (!firstName.isEmpty() & !secondName.isEmpty() & !surName.isEmpty()) {
@@ -83,6 +74,10 @@ public class Web extends WebProcessor {
                     wpr.firstNamesList.add(splitNames[0]);
                     wpr.secondNamesList.add(splitNames[1]);
                     wpr.surNamesList.add(splitNames[2]);
+
+                    firstName = splitNames[0];
+                    secondName = splitNames[1];
+                    surName = splitNames[2];
 
                     wpr.counter.add(splitNames[0]);
                     model.put("counter", wpr.counter.size());
@@ -101,6 +96,9 @@ public class Web extends WebProcessor {
                     wpr.secondNamesList.add("N/A");
                     wpr.surNamesList.add(splitNames[1]);
 
+                    firstName = splitNames[0];
+                    secondName = "N/A";
+                    surName = splitNames[1];
 
                     model.put("firstName", wpr.firstNamesList);
                     model.put("secondName", wpr.secondNamesList);
@@ -111,19 +109,23 @@ public class Web extends WebProcessor {
 
                 } else if ("Error".equals(names)) {
 
-                    model.put("error", er.emailError.add("something is wrong the names you provided"));
+                    //FIXME model.put("error", er.emailError.add("something is wrong the names you provided"));
                 }
             }
+
+
+            if (!model.containsKey("emailError") /*TODO when adding a success message. must also put i condition*/) {
+                User user = new User(email, firstName, secondName, surName, password);
+                LogIn passwords = new LogIn(email,password,pass.securePassword,pass.salt);
+                myUserTable.put(email, user);
+                myPasswords.put(email,passwords);
+
+            }
+
 
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "registration.handlebars"));
         });
 
-
-        get("/registered", (req, res) -> new HandlebarsTemplateEngine()
-                .render(new ModelAndView(model, "registered.handlebars")));
-
-        post("/registered", (req, res) -> new HandlebarsTemplateEngine()
-                .render(new ModelAndView(model, "registered.handlebars")));
     }
 }

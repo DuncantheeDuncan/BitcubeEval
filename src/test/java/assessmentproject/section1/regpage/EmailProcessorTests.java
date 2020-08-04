@@ -25,7 +25,7 @@ public class EmailProcessorTests {
 
         name = "phum@lani@gm.com";
         Actual = email.addEmail(name);
-        Expected = "email cannot contain two or more of '@' in your username";
+        Expected = "error: email cannot contain two or more of '@' in your username";
 
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));

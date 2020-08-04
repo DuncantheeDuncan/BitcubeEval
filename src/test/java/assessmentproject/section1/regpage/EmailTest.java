@@ -16,64 +16,63 @@ public class EmailTest {
     String yahoo = "@yahoo.com";
     String mac = "@mac.com";
 
-    //TODO fix the method 'coz it's now not checking for
-    // unique emails only web class will check for duplicate emails
-//    @DisplayName("should return all unique emails")
-//    @Test
-//    public void makingEmailUnique() {
-//
-//        Email email = new Email();
-//
-//        // checking if we getting what we entered.
-//
-//        name = "phumlani".concat(gmail);
-//        Actual = email.makeEmailUnique(name);
-//        Expected = "phumlani@gmail.com";
-//
-//        assertEquals(Expected, Actual);
-//        assertTrue(Expected.contains(Actual));
-//
-//
-//        // ignoring caps
-//
-//        name = "joseph".concat(mac);
-//        email.makeEmailUnique("Joseph".concat(mac));
-//        email.makeEmailUnique("JOSEPH".concat(mac));
-//        email.makeEmailUnique("JOsEpH".concat(mac));
-//
-//        Actual = email.makeEmailUnique(name);
-//        Expected = "email already exists joseph@mac.com";
-//
-//        assertEquals(Expected, Actual);
-//        assertTrue(Expected.contains(Actual));
-//
-//    }
 
-//    @DisplayName("should increment the count when same emails with different domains")
-//    @Test
-//    public void shouldIncrementAllEmailsWithDifferentDomains() {
-//
-//        Email email = new Email();
-//
-//        // should pass entering same emails with different domains
-//
-//        name = "micheal";
-//        email.makeEmailUnique(name.concat(gmail));
-//        email.makeEmailUnique(name.concat(gmail).toUpperCase());
-//        email.makeEmailUnique(name.concat(yahoo));
-//        email.makeEmailUnique(name.concat(mac));
-//        email.makeEmailUnique(name.concat("@gov.za"));
-//        email.makeEmailUnique(name.concat("@me.co.uk"));
-//        email.makeEmailUnique(name.concat("@bitcube.tech"));
-//
-//        Actual = String.valueOf(email.count());
-//        Expected = "6";
-//
-//
-//        assertEquals(Expected, Actual);
-//        assertTrue(Expected.contains(Actual));
-//
-//    }
+    @DisplayName("should return all unique emails")
+    @Test
+    public void makingEmailUnique() {
+
+        Email email = new Email();
+
+        // checking if we getting what we entered.
+
+        name = "phumlani".concat(gmail);
+        Actual = email.makeEmailUnique(name);
+        Expected = "phumlani@gmail.com";
+
+        assertEquals(Expected, Actual);
+        assertTrue(Expected.contains(Actual));
+
+
+        // ignoring caps and keeping the count
+
+        Email.emailHashSet.clear();
+        name = "joseph".concat(mac);
+        email.makeEmailUnique("Joseph".concat(mac));
+        email.makeEmailUnique("JOSEPH".concat(mac));
+        email.makeEmailUnique("JOsEpH".concat(mac));
+
+        Actual = String.valueOf(email.count());
+        Expected = "1";
+
+        assertEquals(Expected, Actual);
+        assertTrue(Expected.contains(Actual));
+    }
+
+    @DisplayName("should increment the count when same emails with different domains")
+    @Test
+    public void shouldIncrementAllEmailsWithDifferentDomains() {
+
+        Email email = new Email();
+
+        // should pass entering same emails with different domains
+
+        name = "micheal";
+        email.makeEmailUnique(name.concat(gmail));
+        email.makeEmailUnique(name.concat(gmail).toUpperCase());
+        email.makeEmailUnique(name.concat(yahoo));
+        email.makeEmailUnique(name.concat(mac));
+        email.makeEmailUnique(name.concat("@gov.za"));
+        email.makeEmailUnique(name.concat("@me.co.uk"));
+        email.makeEmailUnique(name.concat("@bitcube.tech"));
+
+        Actual = String.valueOf(email.count());
+        Expected = "6";
+
+
+        assertEquals(Expected, Actual);
+        assertTrue(Expected.contains(Actual));
+
+    }
 
     @DisplayName("validating the email address")
     @Test
@@ -85,7 +84,7 @@ public class EmailTest {
 
         name = "sa@mson";
         Actual = email.validation(name.concat(gmail));
-        Expected = "email cannot contain two or more of '@' in your username";
+        Expected = "Error: email cannot contain two or more of '@' in your username";
 
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));
@@ -95,14 +94,14 @@ public class EmailTest {
 
         name = "@samsomlook.com";
         Actual = email.validation(name);
-        Expected = "email is too short";
+        Expected = "Error: email is too short";
 
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));
 
         name = "sa@look.com";
         Actual = email.validation(name);
-        Expected = "email is too short";
+        Expected = "Error: email is too short";
 
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));
@@ -111,7 +110,7 @@ public class EmailTest {
 
         name = "samsonlook.com";
         Actual = email.validation(name);
-        Expected = "email must have '@'";
+        Expected = "Error: email must have '@'";
 
         assertEquals(Expected, Actual);
         assertTrue(Expected.contains(Actual));
