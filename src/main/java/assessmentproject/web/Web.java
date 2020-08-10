@@ -3,6 +3,7 @@ package assessmentproject.web;
 import assessmentproject.routes.ProfileHandlebars;
 import assessmentproject.routes.HomeHandlebars;
 import assessmentproject.routes.LoginHandlebars;
+import assessmentproject.routes.RegistrationHandlebars;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 

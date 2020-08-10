@@ -34,7 +34,9 @@ public class LoginHandlebars {
         post("/login", (req, res) -> {
 
             String email = req.queryParams("email");
-            String providedPassword = req.queryParams("current-password");
+            String providedPassword = req.queryParams("userPassword");
+            model.remove("passwordError");
+            model.remove("emailExist");
 
 
             for (Map.Entry<String, LogIn> entry2 : myPasswords.entrySet()) {
@@ -56,24 +58,22 @@ public class LoginHandlebars {
                         req.session().id();
                         model.put("securedPassword", securedPassword);
 
-
-                        System.out.println("provided pass : " + providedPassword + " is correct");
-
                         res.redirect("/profile");
 
                     } else {
 
-                        // TODO redirect to login page or custom message
-                        System.out.println("provided pass is incorrect");
+                        model.put("passwordError", "incorrect email or password");
+                        res.redirect("/login");
                     }
 
+                } else {
+
+                    model.put("emailExist", "please register your email");
+                    res.redirect("/login");
                 }
+
             }
 
-
-            System.out.println(email + " nothing");//todo <-----
-
-            model.put("hello", "hello world");
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "login.handlebars"));
         });

@@ -54,7 +54,13 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">@something</span>
                         </div>
-                        <input type="email" name="email" id="emailId" placeholder="Enter your email" class="form-control" required aria-label="">
+                        <input type="email"
+                               name="email"
+                               id="emailId"
+                               onkeydown="FxUserPress()"
+                               placeholder="Enter your email"
+                               class="form-control"
+                               required aria-label="">
                         
                     </div>
 
@@ -64,16 +70,21 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="basic-addon1">Password</span>
                         </div>
-                        <input type="password" required name="current-password" 
+                        <input type="password" required name="userPassword"
                                pattern="(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{6,15}"
                                title="Must contain at least 1 number, 1 uppercase, 1 lowercase letter, 1 special character, and must have at least  be 6 or more characters long"
                                class="form-control" placeholder="Enter your password" aria-label=""
                                id="passwordId"
+                               onkeydown="FxUserPress()"
                                aria-describedby="basic-addon1">
                     </div>
 
                     <label class="checkbox">
-                        <input type="checkbox" value="remember-me" id="remember"> Remember me
+                        <input type="checkbox"
+                               value="remember-me"
+                               onclick="FxRememberMe()"
+                               name="rememberMe"
+                               id="remember"> Remember me
                     </label>
                     
                     <button  id="save"  type="submit" class="btn btn-primary">sign in</button>
@@ -107,46 +118,61 @@
         crossorigin="anonymous"></script>
 
 
-<script>
-
- $(document).ready(function(){
-
-        $('input[type="checkbox"]').click(function(){
-
-            if($(this).prop("checked") == true){
-
-            $('#save').on('click', function(){
-<!--            email-->
-                $('input[type="email"]').each(function(){
-                var id = $(this).attr('id');
-                var value = $(this).val();
-                localStorage.setItem(id, value);
-                document.getElementById("emailId").value = value;
-
-        });
-
-<!--password -->
-        $('input[type="password"]').each(function(){
-                var id = $(this).attr('id');
-                var value = $(this).val();
-
-                localStorage.setItem(id, value);
-<!--                NOT STORING THE PASSWORD MUST FIX!! -->
-                document.getElementById("passwordId").value = value;
-        });
-
-            });
-
-                console.log("Checkbox is checked.");
-            }
-            else if($(this).prop("checked") == false){
-            document.getElementById("emailId").value = "";
-                console.log("Checkbox is unchecked.");
-            }
-        });
-    });
+    <script type="text/javascript">
 
 
+	if (localStorage.rememberMe == "true") {
+
+		document.forms[0].rememberMe.checked= true;
+		document.forms[0].email.value = localStorage.userEmail;
+		document.forms[0].userPassword.value = localStorage.password;
+	}else{
+		document.forms[0].rememberMe.checked = false;
+	}
+
+
+function FxUserPress() {
+	// body...
+if (document.forms[0].rememberMe.checked == true) {
+
+			// alert("checked.");
+
+			localStorage.setItem("rememberMe",true);
+			localStorage.setItem("userEmail",document.forms[0].email.value);
+			localStorage.setItem("password",document.forms[0].userPassword.value);
+		}else{
+
+			// alert("unchecked");
+
+			localStorage.setItem("rememberMe",false);
+			localStorage.setItem("userEmail","");
+			localStorage.setItem("password","");
+
+		}
+
+}
+
+	function FxRememberMe() {
+		// body...
+
+		if (document.forms[0].rememberMe.checked == true) {
+
+			// alert("checked.");
+
+			localStorage.setItem("rememberMe",true);
+			localStorage.setItem("userEmail",document.forms[0].email.value);
+			localStorage.setItem("password",document.forms[0].userPassword.value);
+		}else{
+
+			// alert("unchecked");
+
+			localStorage.setItem("rememberMe",false);
+			localStorage.setItem("userEmail","");
+			localStorage.setItem("password","");
+
+		}
+	}
 </script>
+
 </body>
 </html>

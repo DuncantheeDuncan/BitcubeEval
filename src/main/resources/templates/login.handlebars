@@ -1,338 +1,167 @@
-<html>
+<!doctype html>
+<html lang="en">
 <head>
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-            integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
-    <!--    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>-->
-    <!--    <script src="https://code.jquery.com/jquery-2.2.0.min.js"-->
-    <!--            integrity="sha256-ihAoc6M/JPfrIiIeayPE9xjin4UWjsx2mjW/rtmxLM4=" crossorigin="anonymous"></script>-->
-    <!--    <script src="jquery_cookie.js" type="text/javascript"></script>-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <!-- Include Handlebars from a CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+    <title>sign up</title>
 
 </head>
+<body>
 
+<div class="container">
+    <br><br>
+    <h2>BitCube Eval App</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="container">
+                <br>
+                <div class="list-group">
 
-<form action="/login" method="post">
-
-    <h2>{{hello}}</h2>
-
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">email</span>
+                    <a href="/" class="list-group-item list-group-item-action">Menu</a>
+                    <a href="/login" class="list-group-item active list-group-item-action ">Sign in</a>
+                    <!-- <a href="registered.html" class="list-group-item list-group-item-action">Registered users</a> -->
+                </div>
+                <br>
+            </div>
         </div>
-        <input type="text" name="email" required class="form-control" placeholder="Your email"
-               id="emailId" aria-label="" autocomplete="name" aria-describedby="basic-addon1">
-    </div>
+        <div class="col-md-8">
+            <div class="container">
+                <br>
+                <h2 class="header">Sign in to Bit-cube</h2>
 
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">password</span>
+                {{#if passwordError}}
+                <div class="alert alert-danger" role="alert">
+                    {{passwordError}}
+                </div>
+                {{/if}}
+
+                {{#if emailExist}}
+                    <div class="alert alert-danger" role="alert">
+                        {{emailExist}}
+                    </div>
+                {{/if}}
+
+                <form action="/login" method="post">
+
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">@something</span>
+                        </div>
+                        <input type="email"
+                               name="email"
+                               id="emailId"
+                               onkeydown="FxUserPress()"
+                               placeholder="Enter your email"
+                               class="form-control"
+                               required aria-label="">
+
+                    </div>
+
+
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Password</span>
+                        </div>
+                        <input type="password" required name="userPassword"
+                               pattern="(?=.*\d)(?=.*\W)(?=.*[a-z])(?=.*[A-Z]).{6,15}"
+                               title="Must contain at least 1 number, 1 uppercase, 1 lowercase letter, 1 special character, and must have at least  be 6 or more characters long"
+                               class="form-control" placeholder="Enter your password" aria-label=""
+                               id="passwordId"
+                               onkeydown="FxUserPress()"
+                               aria-describedby="basic-addon1">
+                    </div>
+
+                    <label class="checkbox">
+                        <input type="checkbox"
+                               value="remember-me"
+                               onclick="FxRememberMe()"
+                               name="rememberMe"
+                               id="remember"> Remember me
+                    </label>
+
+                    <button  id="save"  type="submit" class="btn btn-primary">sign in</button>
+                </form>
+            </div>
+
         </div>
-        <input type="password" name="current-password" required class="form-control" placeholder="Your Name"
-               id="passwordId" aria-label="" value="" autocomplete="current-password" aria-describedby="basic-addon1">
+
     </div>
+</div>
 
-    <label class="checkbox">
-        <input type="checkbox" value="remember-me" id="remember"> Remember me
-    </label>
-    <button id="save" type="submit" class="btn btn-primary">sign-up</button>
-</form>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
 
 
-<script>
+<script type="text/javascript">
 
- $(document).ready(function(){
 
-        $('input[type="checkbox"]').click(function(){
+	if (localStorage.rememberMe == "true") {
 
-            if($(this).prop("checked") == true){
+		document.forms[0].rememberMe.checked= true;
+		document.forms[0].email.value = localStorage.userEmail;
+		document.forms[0].userPassword.value = localStorage.password;
+	}else{
+		document.forms[0].rememberMe.checked = false;
+	}
 
-            $('#save').on('click', function(){
-<!--            email-->
-                $('input[type="text"]').each(function(){
-                var id = $(this).attr('id');
-                var value = $(this).val();
-                localStorage.setItem(id, value);
-                document.getElementById("emailId").value = value;
 
-        });
+function FxUserPress() {
+	// body...
+if (document.forms[0].rememberMe.checked == true) {
 
-<!--password -->
-        $('input[type="password"]').each(function(){
-                var id = $(this).attr('id');
-                var value = $(this).val();
+			// alert("checked.");
 
-                localStorage.setItem(id, value);
-<!--                NOT STORING THE PASSWORD MUST FIX!! -->
-                document.getElementById("passwordId").value = value;
-        });
+			localStorage.setItem("rememberMe",true);
+			localStorage.setItem("userEmail",document.forms[0].email.value);
+			localStorage.setItem("password",document.forms[0].userPassword.value);
+		}else{
 
-            });
+			// alert("unchecked");
 
-                console.log("Checkbox is checked.");
-            }
-            else if($(this).prop("checked") == false){
-            document.getElementById("emailId").value = "";
-                console.log("Checkbox is unchecked.");
-            }
-        });
-    });
+			localStorage.setItem("rememberMe",false);
+			localStorage.setItem("userEmail","");
+			localStorage.setItem("password","");
 
+		}
 
+}
 
+	function FxRememberMe() {
+		// body...
 
+		if (document.forms[0].rememberMe.checked == true) {
 
+			// alert("checked.");
 
+			localStorage.setItem("rememberMe",true);
+			localStorage.setItem("userEmail",document.forms[0].email.value);
+			localStorage.setItem("password",document.forms[0].userPassword.value);
+		}else{
 
+			// alert("unchecked");
 
+			localStorage.setItem("rememberMe",false);
+			localStorage.setItem("userEmail","");
+			localStorage.setItem("password","");
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+		}
+	}
 </script>
+
+</body>
 </html>
