@@ -1,9 +1,6 @@
 package assessmentproject.web;
 
-import assessmentproject.routes.ProfileHandlebars;
-import assessmentproject.routes.HomeHandlebars;
-import assessmentproject.routes.LoginHandlebars;
-import assessmentproject.routes.RegistrationHandlebars;
+import assessmentproject.routes.*;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -30,11 +27,14 @@ public class Web extends WebProcessor {
 
         ProfileHandlebars.profilePage(model);
 
+        FriendsHandlebars.friendsPage(model);
 
-        get("/registered", (req, res) -> new HandlebarsTemplateEngine()
-                .render(new ModelAndView(model, "registered.handlebars")));
+        RegisteredHandlebars.registeredPage(model);
 
-        post("/registered", (req, res) -> new HandlebarsTemplateEngine()
-                .render(new ModelAndView(model, "registered.handlebars")));
+
+
+
+        LogoutHandlebars.logout(model);
+
     }
 }

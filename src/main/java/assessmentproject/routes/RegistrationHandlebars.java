@@ -38,7 +38,7 @@ public class RegistrationHandlebars {
 
         post("/registration", (req, res) -> {
 
-            notFound("<html><body><h1>Page not found</h1></body></html>");
+
 
             String firstName = req.queryParams("firstName");
             String secondName = req.queryParams("secondName");

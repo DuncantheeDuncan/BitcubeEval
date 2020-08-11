@@ -2,6 +2,7 @@ package assessmentproject.web;
 
 import assessmentproject.User;
 import assessmentproject.section2.loginpage.LogIn;
+import assessmentproject.section3.profile.Friends;
 
 import java.util.*;
 
@@ -17,5 +18,6 @@ public class WebProcessor {
     public List<String> counter = new ArrayList<>();
     public HashSet<String> emailChecker = new HashSet<>();
     public static Map<String, User> myUserTable = new Hashtable<>();
+    public static Map<String, Friends> myFriendsTable = new Hashtable<>();
     public static Map<String, LogIn> myPasswords = new Hashtable<>();
 }
