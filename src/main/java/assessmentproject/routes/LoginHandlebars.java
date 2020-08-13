@@ -6,19 +6,20 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.Map;
 
-import static assessmentproject.section1.regpage.Password.generateSecurePassword;
+
+import static assessmentproject.section2.loginpage.VerifyUserPassword.verifyUserPassword;
 import static assessmentproject.web.WebProcessor.myPasswords;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class LoginHandlebars {
 
-    static boolean verifyUserPassword(String providedPassword, String securedPassword, String salt) {
-
-        String newSecurePassword = generateSecurePassword(providedPassword, salt);
-
-        return newSecurePassword.equalsIgnoreCase(securedPassword);
-    }
+//    static boolean verifyUserPassword(String providedPassword, String securedPassword, String salt) {
+//
+//        String newSecurePassword = generateSecurePassword(providedPassword, salt);
+//
+//        return newSecurePassword.equalsIgnoreCase(securedPassword);
+//    }
 
 
     public static void loginPage(Map model) {

@@ -20,12 +20,11 @@ public class ProfileHandlebars {
      * */
 
 
-    static Map<String, Object> map = new HashMap<>();
+//    static Map<String, Object> map = new HashMap<>();
 
     public static void profilePage(Map model) {
 
         get("/profile", (req, res) -> {
-
 
             for (Map.Entry<String, LogIn> entry2 :myPasswords.entrySet()){
                 String key2 = entry2.getKey();
