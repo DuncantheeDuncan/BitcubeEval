@@ -25,5 +25,11 @@ public class Crud {
         return user;
     }
 
+    public User findByUserId(String emailId){
 
+        return myUserTable.get(emailId);
+    }
+
+    // TODO: 2020/08/13  if user update the emil, i must check if
+    //  the email exist or not.
 }

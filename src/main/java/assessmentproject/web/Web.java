@@ -1,8 +1,7 @@
 package assessmentproject.web;
 
+
 import assessmentproject.routes.*;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,10 +28,7 @@ public class Web extends WebProcessor {
 
         FriendsHandlebars.friendsPage(model);
 
-        RegisteredHandlebars.registeredPage(model);
-
-
-
+        RegisteredHandlebars.registeredPage(model); // FIXME: 2020/08/13 the page is not redirecting if second name input is not empty
 
         LogoutHandlebars.logout(model);
 

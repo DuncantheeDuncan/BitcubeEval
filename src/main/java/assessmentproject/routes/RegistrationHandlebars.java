@@ -39,6 +39,7 @@ public class RegistrationHandlebars {
         post("/registration", (req, res) -> {
 
 
+            // FIXME: 2020/08/13  must try and remove duplicate
 
             String firstName = req.queryParams("firstName");
             String secondName = req.queryParams("secondName");

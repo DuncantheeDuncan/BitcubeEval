@@ -1,6 +1,8 @@
 package assessmentproject;
 
-public class User {
+import assessmentproject.section4.profilepage.Crud;
+
+public class User  {
     public String email;
     public String firstName;
     public String secondName;

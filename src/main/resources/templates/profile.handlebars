@@ -34,15 +34,49 @@
             <div class="container">
                 <div class="jumbotron">
                     <h1 class="display-4">PROFILE</h1>
-
+<!--next organise the profile page -->
                     <p>First Name: {{lFirstName}}</p>
                     <p>Second Name: {{lSecondName}}</p>
                     <p>SurName: {{lSurName}}</p>
+                    <p>email: {{lEmail}}</p>
                     <p>Salted Password: {{lSaltPassword}}</p>
                     <p>Secured Password: {{lSecuredPassword}}</p>
                     <hr class="my-4">
                     <p>more information about the user</p>
 
+                    <form action="/profile" method="post">
+
+
+                        <input type="text" required placeholder="to update enter your email here" value="{{lEmail}}" name="emailId">
+                        <br/>
+                        <input type="text"  placeholder="email" name="email">
+                        <br/>
+                        <input type="text" placeholder="first name"  name="firstName">
+                        <br/>
+                        <input type="text" placeholder="second name"  name="secondName">
+                        <br/>
+                        <input type="text"  placeholder="surname" name="surName">
+
+
+                        <button type="submit" >up date information</button>
+                    </form>
+<!--                    //TODO https://getbootstrap.com/docs/4.0/components/modal/-->
+                    <hr class="my-4">
+                    <hr class="my-4">
+                    <h4> change password</h4>
+                    <form action="/updateProfile" method="post">
+
+
+                        <input type="text" required placeholder="to update enter your email here" value="{{lEmail}}" name="emailIdPassword">
+                        <br/>
+                        <input type="text" required placeholder="enter your password" name="currentPassword">
+                        <br/>
+                        <input type="text" required placeholder="enter new password"  name="newPassword">
+                        <br/>
+                        <input type="text" required placeholder="confirm your new password"  name="confirmPassword">
+
+                        <button type="submit" >up date password</button>
+                    </form>
                 </div>
             </div>
         </div>
@@ -60,4 +94,3 @@
         crossorigin="anonymous"></script>
 </body>
 </html>
-

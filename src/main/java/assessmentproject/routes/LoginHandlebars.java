@@ -14,14 +14,6 @@ import static spark.Spark.post;
 
 public class LoginHandlebars {
 
-//    static boolean verifyUserPassword(String providedPassword, String securedPassword, String salt) {
-//
-//        String newSecurePassword = generateSecurePassword(providedPassword, salt);
-//
-//        return newSecurePassword.equalsIgnoreCase(securedPassword);
-//    }
-
-
     public static void loginPage(Map model) {
 
 

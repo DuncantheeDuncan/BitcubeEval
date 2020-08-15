@@ -47,6 +47,11 @@
                     </div>
                 {{/if}}
 
+                {{#if reLogIn}}
+                    <div class="alert alert-primary" role="alert">
+                        {{reLogIn}}
+                    </div>
+                {{/if}}
                 <form action="/login" method="post">
 
 

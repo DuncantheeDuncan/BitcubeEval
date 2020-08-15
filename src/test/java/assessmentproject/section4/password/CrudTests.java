@@ -46,12 +46,42 @@ public class CrudTests {
         newPassword = "asimQ1q!";
         oldPassword = providedPassword;
 
-
         actualMessage = userPassword;
         expectedMessage = crud.update(email, oldPassword, newPassword);
 
         assertEquals(expectedMessage, actualMessage);
+        assertEquals(expectedMessage.getClass(), actualMessage.getClass());
 
-// TODO: 2020/08/13  add more test
+
+
+
+        /*
+         * fist we add password so we can update it later
+         * */
+
+        email = "Mike.steve@gbuck.uk";
+        providedPassword = "MJkl27%!";
+        securedPassword = passwordProcessor.password(providedPassword);
+        salt = passwordProcessor.salt;
+
+        LogIn userPassword2 = new LogIn(email, providedPassword, securedPassword, salt);
+        WebProcessor.myPasswords.put(email, userPassword2);
+
+
+        /*
+         * now we can start updating the password
+         * */
+
+        newPassword = "newPass123!@";
+        oldPassword = providedPassword;
+
+
+        actualMessage = userPassword2;
+        expectedMessage = crud.update(email, oldPassword, newPassword);
+
+        assertEquals(expectedMessage, actualMessage);
+        assertEquals(expectedMessage.getClass(), actualMessage.getClass());
+
+
     }
 }
