@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>remember</title>
+</head>
+<body>
+
+<form>
+	
+	User name <input type="text" name="TxtUsername" onkeydown="FxUserPress()">
+	<br><br>
+
+	Password <input type="text" name="TxtPassword" onkeydown="FxUserPress()">
+	<br><br>
+
+	<input type="checkbox" name="chkbox" onclick="Fxchbox()"> Remember password
+
+	<input type="submit" name="sub">
+</form>
+
+
+<script type="text/javascript">
+	
+
+	if (localStorage.chkbox == "true") {
+
+		document.forms[0].chkbox.checked= true;
+		document.forms[0].TxtUsername.value = localStorage.username;
+		document.forms[0].TxtPassword.value = localStorage.password;
+	}else{
+		document.forms[0].chkbox.checked = false;
+	}
+
+
+function FxUserPress() {
+	// body...
+if (document.forms[0].chkbox.checked == true) {
+
+			// alert("checked.");
+
+			localStorage.setItem("chkbox",true);
+			localStorage.setItem("username",document.forms[0].TxtUsername.value);
+			localStorage.setItem("password",document.forms[0].TxtPassword.value);
+		}else{
+
+			// alert("unchecked");
+
+			localStorage.setItem("chkbox",false);
+			localStorage.setItem("username","");
+			localStorage.setItem("password","");
+
+		}
+
+}
+
+	function Fxchbox() {
+		// body...
+
+		if (document.forms[0].chkbox.checked == true) {
+
+			// alert("checked.");
+
+			localStorage.setItem("chkbox",true);
+			localStorage.setItem("username",document.forms[0].TxtUsername.value);
+			localStorage.setItem("password",document.forms[0].TxtPassword.value);
+		}else{
+
+			// alert("unchecked");
+
+			localStorage.setItem("chkbox",false);
+			localStorage.setItem("username","");
+			localStorage.setItem("password","");
+
+		}
+	}
+</script>
+
+
+</body>
+</html>
