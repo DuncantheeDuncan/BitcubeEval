@@ -160,4 +160,53 @@ public class CrudTests {
         assertEquals(expectedMessage, actualMessage);
         assertEquals(expectedMessage.getClass(), actualMessage.getClass());
     }
+
+
+    @DisplayName("should check if email exist before updating it so we can avoid duplicates")
+    @Test
+    public void checkingEmailDuplicates(){
+
+        Crud crud = new Crud();
+
+        firstName = "Duncan";
+        secondName = "Mthobisi";
+        surName = "Mvelase";
+        emailId = "mve@mxo.capetown";
+
+
+        User user1 = new User
+                (
+                        emailId,
+                        firstName,
+                        secondName,
+                        surName
+                );
+
+        WebProcessor.myUserTable.put(emailId,user1);
+
+        firstName = "Jackson";
+        secondName = "Thobani";
+        surName = "Mvelase";
+        emailId = "mxo@capetown.cp";
+
+
+        User user2 = new User
+                (
+                        emailId,
+                        firstName,
+                        secondName,
+                        surName
+                );
+
+        WebProcessor.myUserTable.put(emailId,user2);
+
+        emailId = "mve@gmail.c";
+
+        String actualMessage = (String) crud.checkEmailDuplicates(emailId);
+
+        String expectedMessage = "!exist";
+
+        assertEquals(expectedMessage, actualMessage);
+        assertTrue(expectedMessage.matches(actualMessage));
+    }
 }

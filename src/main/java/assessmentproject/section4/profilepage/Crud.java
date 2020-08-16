@@ -25,11 +25,21 @@ public class Crud {
         return user;
     }
 
-    public User findByUserId(String emailId){
+    public Object checkEmailDuplicates(String emailDuplicate) {
+
+        try {
+            if (!myUserTable.containsValue(myUserTable.get(emailDuplicate))) {
+                return "!exist";
+            } else {
+                return "exist";
+            }
+        } catch (NullPointerException e) {
+            return "!exist";
+        }
+    }
+
+    public User findByUserId(String emailId) {
 
         return myUserTable.get(emailId);
     }
-
-    // TODO: 2020/08/13  if user update the emil, i must check if
-    //  the email exist or not.
 }

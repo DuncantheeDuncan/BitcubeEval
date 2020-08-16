@@ -87,8 +87,20 @@ public class ProfileHandlebars {
                 if (email.isEmpty())
                     email = crud.findByUserId(emailId).email;
 
-                crud.update(emailId, firstName, secondName, surName, email);
-            }else {
+                String isExist = String.valueOf(crud.checkEmailDuplicates(email));
+
+                if (isExist.equals("!exist")) {
+                    crud.update(emailId, firstName, secondName, surName, email);
+
+                    res.redirect("http://0.0.0.0:8080/profile");
+                    model.remove("duplicate");
+                } else {
+
+                    // FIXME: 2020/08/16  update this key
+                    model.put("duplicate", "Oops email is already taken");
+                }
+
+            } else {
 
                 try {
                     // TODO: 2020/08/15 have custom exception classes
@@ -98,8 +110,7 @@ public class ProfileHandlebars {
                 }
             }
 
-            res.redirect("http://0.0.0.0:8080/profile");
-            return ob.writeValueAsString("");
+            return ob.writeValueAsString("Oops email is already taken");
         });
 
 
@@ -123,7 +134,7 @@ public class ProfileHandlebars {
                     crud1.update(emailIdPassword, currentPassword, newPassword);
 
                     res.redirect("http://0.0.0.0:8080/login");
-                    model.put("reLogIn","you have successfully updated your password please log in again");
+                    model.put("reLogIn", "you have successfully updated your password please log in again");
                 }
 
                 return ob1.writeValueAsString("");

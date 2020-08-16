@@ -6,7 +6,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.Map;
 
-
 import static assessmentproject.section2.loginpage.VerifyUserPassword.verifyUserPassword;
 import static assessmentproject.web.WebProcessor.myPasswords;
 import static spark.Spark.get;
