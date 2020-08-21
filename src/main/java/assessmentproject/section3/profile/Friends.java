@@ -8,10 +8,10 @@ public class Friends extends User {
             String email,
             String firstName,
             String secondName,
-            String surName,
-            String password
+            String surName
+
     ) {
-        super(email, firstName, secondName, surName, password);
+        super(email, firstName, secondName, surName);
     }
 
 }

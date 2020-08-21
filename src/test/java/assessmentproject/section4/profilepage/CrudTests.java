@@ -5,7 +5,8 @@ import assessmentproject.web.WebProcessor;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CrudTests {
 
@@ -164,7 +165,7 @@ public class CrudTests {
 
     @DisplayName("should check if email exist before updating it so we can avoid duplicates")
     @Test
-    public void checkingEmailDuplicates(){
+    public void checkingEmailDuplicates() {
 
         Crud crud = new Crud();
 
@@ -182,7 +183,7 @@ public class CrudTests {
                         surName
                 );
 
-        WebProcessor.myUserTable.put(emailId,user1);
+        WebProcessor.myUserTable.put(emailId, user1);
 
         firstName = "Jackson";
         secondName = "Thobani";
@@ -198,7 +199,7 @@ public class CrudTests {
                         surName
                 );
 
-        WebProcessor.myUserTable.put(emailId,user2);
+        WebProcessor.myUserTable.put(emailId, user2);
 
         emailId = "mve@gmail.c";
 

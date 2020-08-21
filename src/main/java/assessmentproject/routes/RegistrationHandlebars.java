@@ -5,11 +5,12 @@ import assessmentproject.section1.regpage.EmailProcessor;
 import assessmentproject.section1.regpage.PasswordProcessor;
 import assessmentproject.section1.regpage.PersonalInformation;
 import assessmentproject.section2.loginpage.LogIn;
+import assessmentproject.section5.friends.RegisteredUsers;
 import assessmentproject.web.WebProcessor;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.Map;
+import java.util.*;
 
 import static assessmentproject.web.WebProcessor.myPasswords;
 import static assessmentproject.web.WebProcessor.myUserTable;
@@ -124,6 +125,17 @@ public class RegistrationHandlebars {
                 LogIn passwords = new LogIn(email,password,pass.securePassword,pass.salt);
                 myUserTable.put(email, user);
                 myPasswords.put(email,passwords);
+
+
+              String[] arr = {"one","two","three"};
+                List<String> listing = new ArrayList<String>(Arrays.asList(arr));
+                model.put("tetsing",listing);
+
+                RegisteredUsers re = new RegisteredUsers();
+                re.listOfUsers();
+                model.put("firstNames", RegisteredUsers.getFirstNames());
+
+
 
                 res.redirect("/");
             }
