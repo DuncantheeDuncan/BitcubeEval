@@ -2,7 +2,7 @@ package assessmentproject.routes;
 
 import assessmentproject.section2.loginpage.LogIn;
 import spark.ModelAndView;
-import spark.Request;
+import spark.Session;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.Map;
@@ -15,14 +15,11 @@ import static spark.Spark.post;
 public class LoginHandlebars {
 
 
-
     public static void loginPage(Map model) {
 
 
         get("/login", (req, res) -> {
-
-            return new HandlebarsTemplateEngine()
-                    .render(new ModelAndView(model, "login.handlebars"));
+            return new HandlebarsTemplateEngine().render(new ModelAndView(model, "login.handlebars"));
         });
 
 
@@ -30,11 +27,15 @@ public class LoginHandlebars {
 
             String email = req.queryParams("email");
             String providedPassword = req.queryParams("userPassword");
-            model.remove("passwordError");
-            model.remove("emailExist");
+
+            boolean isEqual = false;
 
 
             for (Map.Entry<String, LogIn> entry2 : myPasswords.entrySet()) {
+
+
+                model.remove("passwordError");
+                model.remove("emailExist");
 
                 LogIn logIn2 = entry2.getValue();
                 String key2 = entry2.getKey();
@@ -42,32 +43,34 @@ public class LoginHandlebars {
                 String securedPassword = logIn2.securedPassword;
                 String salt = logIn2.salt;
 
-                if (key2.equals(email)) {
+                isEqual = key2.equals(email);
+
+                if (isEqual) {
 
                     boolean isPassMatch = verifyUserPassword(providedPassword, securedPassword, salt);
 
                     if (isPassMatch) {
 
-                        req.session(true);
-                        req.session().attribute("user email", email);
-                        req.session().id();
-                        model.put("securedPassword", securedPassword);
+                        Session session = req.session(true);
+                        session.isNew();
+                        session.attribute("user email", email);
+
+                        // TODO: 2020/08/24 use lastAccessible session for last seen
 
                         res.redirect("/profile");
+                        break;
 
                     } else {
 
                         model.put("passwordError", "incorrect email or password");
-                        res.redirect("/login");
+
                     }
-
-                } else {
-
-                    model.put("emailExist", "please register your email");
-                    res.redirect("/login");
                 }
-
             }
+
+            if (!isEqual)
+                model.put("emailExist", "please register your email");// FIXME: 2020/08/25  control this part of scope
+
 
             return new HandlebarsTemplateEngine()
                     .render(new ModelAndView(model, "login.handlebars"));
